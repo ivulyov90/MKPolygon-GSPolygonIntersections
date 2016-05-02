@@ -204,7 +204,7 @@
             self.intersectedPolygon = [MKPolygon polygon:[self.dictionaryOfPolygons objectAtIndex:0] intersectedWithSecondPolygon:[self.dictionaryOfPolygons objectAtIndex:1]];
             self.intersectedPolygon.title = @"intersectedPolygon";
             self.intersectedPolygonView = [[MKPolygonView alloc] initWithPolygon:self.intersectedPolygon];
-            NSLog(@"intersected polygon has %i points", self.intersectedPolygon.pointCount);
+            NSLog(@"intersected polygon has %lu points", (unsigned long)self.intersectedPolygon.pointCount);
             [map addOverlay:self.intersectedPolygon];
         }
         [map addOverlay:self.myPolygon];

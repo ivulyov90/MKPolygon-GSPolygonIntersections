@@ -115,7 +115,7 @@
     CGMutablePathRef originalPolygon2Path;
     BOOL foundIntersection = NO;
     
-    int poly1Count = poly1.pointCount;
+    NSUInteger poly1Count = poly1.pointCount;
     MKMapPoint polygon1Points[poly1Count * 2];
     for(int points1Index = 0; points1Index < poly1Count; points1Index++){
         polygon1Points[points1Index * 2] = poly1.points[points1Index];
@@ -130,7 +130,7 @@
     MKPolygon *polygon1 = [MKPolygon polygonWithPoints:polygon1Points count:poly1Count * 2];
     
     
-    int poly2Count = poly2.pointCount;
+    NSUInteger poly2Count = poly2.pointCount;
     MKMapPoint polygon2Points[poly2Count * 2];
     for(int points2Index = 0; points2Index < poly2.pointCount; points2Index++){
         polygon2Points[points2Index * 2] = poly2.points[points2Index];
@@ -144,8 +144,8 @@
     
     MKPolygon *polygon2 = [MKPolygon polygonWithPoints:polygon2Points count:poly2Count * 2];
     
-    int MKPolygon1Count = polygon1.pointCount;
-    int MKPolygon2Count = polygon2.pointCount;
+    NSUInteger MKPolygon1Count = polygon1.pointCount;
+    NSUInteger MKPolygon2Count = polygon2.pointCount;
     
     originalPolygon1Path = CGPathCreateMutable();
     for(int poly1Index = 0; poly1Index < MKPolygon1Count-1; poly1Index++){
@@ -209,7 +209,7 @@
         }
         
         NSArray *intersectionPoints = [self intersectPointsin:intersectionInfo forPointLine:points1Index withFirstPoint:firstpoint andSecondPoint:secondPoint];
-        int intersectionCount = intersectionPoints.count;
+        NSUInteger intersectionCount = intersectionPoints.count;
         
         if(intersectionCount > 0){
             foundIntersection = YES;
@@ -321,7 +321,7 @@
         }
     }
     
-    int count = finalPolygon.count;
+    NSUInteger count = finalPolygon.count;
     MKMapPoint finalPolygonPoints[count];
     
     for(int index = 0; index < count; index++){
@@ -396,7 +396,7 @@
     NSArray *filteredDictionary = [[intersectionDictionary allKeys] filteredArrayUsingPredicate:predicate];
     NSLog(@"filtered dict: %@", filteredDictionary);
     BOOL found = NO;
-    int count = filteredDictionary.count;
+    NSUInteger count = filteredDictionary.count;
     for(int index = 0; index < count; index++){
         if([[intersectionDictionary objectForKey:[filteredDictionary objectAtIndex:index]] intValue] > lineNumber){
             found = YES;
