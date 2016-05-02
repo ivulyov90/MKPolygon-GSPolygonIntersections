@@ -25,10 +25,10 @@
 @property (nonatomic, strong) NSMutableArray *path;
 @property (nonatomic, strong) MKCircle *circle;
 @property (nonatomic, strong) MKPolyline *polyLine;
-@property (nonatomic, strong) MKPolygonView *polygonView;
-@property (nonatomic, strong) MKCircleView *pointCircleView;
-@property (nonatomic, strong) MKPolylineView *polygonBorderView;
-@property (nonatomic, strong) MKPolygonView *intersectedPolygonView;
+@property (nonatomic, strong) MKPolygonRenderer *polygonView;
+@property (nonatomic, strong) MKCircleRenderer *pointCircleView;
+@property (nonatomic, strong) MKPolylineRenderer *polygonBorderView;
+@property (nonatomic, strong) MKPolygonRenderer *intersectedPolygonView;
 @property (nonatomic, strong) MKPolygon *myPolygon;
 @property (nonatomic, strong) MKPolygon *intersectedPolygon;
 
@@ -137,17 +137,17 @@
     [map addOverlay:self.polyLine];
 }
 
--(MKOverlayView *)mapView:(MKMapView *)mapView viewForOverlay:(id<MKOverlay>)overlay{
-    
+- (MKOverlayRenderer *)mapView:(MKMapView *)mapView viewForOverlay:(id<MKOverlay>)overlay
+{
     if([overlay isKindOfClass:[MKCircle class]]){
-        self.pointCircleView = [[MKCircleView alloc]initWithOverlay:overlay];
+        self.pointCircleView = [[MKCircleRenderer alloc] initWithOverlay:overlay];
         self.pointCircleView.strokeColor = [UIColor greenColor];
         self.pointCircleView.fillColor = [UIColor redColor];
         self.pointCircleView.lineWidth = 4.0;
         return self.pointCircleView;
     }
     else if([overlay isKindOfClass:[MKPolyline class]]){
-        self.polygonBorderView = [[MKPolylineView alloc] initWithPolyline:overlay];
+        self.polygonBorderView = [[MKPolylineRenderer alloc] initWithPolyline:overlay];
         self.polygonBorderView.strokeColor = [UIColor blackColor];
         self.polygonBorderView.lineWidth = 1.0;
         return self.polygonBorderView;
@@ -195,7 +195,7 @@
         
         self.myPolygon = [MKPolygon polygonWithCoordinates:coords count:[self.path count]];
         self.myPolygon.title = [self currentPolygonTitle];
-        self.polygonView = [[MKPolygonView alloc] initWithPolygon:self.myPolygon];
+        self.polygonView = [[MKPolygonRenderer alloc] initWithPolygon:self.myPolygon];
         [self.dictionaryOfPolygons addObject:self.myPolygon];
         if([self.myPolygon.title isEqual: @""]){
             self.myPolygon.title = @"default";
@@ -203,7 +203,7 @@
         if(self.dictionaryOfPolygons.count == 2){
             self.intersectedPolygon = [MKPolygon polygon:[self.dictionaryOfPolygons objectAtIndex:0] intersectedWithSecondPolygon:[self.dictionaryOfPolygons objectAtIndex:1]];
             self.intersectedPolygon.title = @"intersectedPolygon";
-            self.intersectedPolygonView = [[MKPolygonView alloc] initWithPolygon:self.intersectedPolygon];
+            self.intersectedPolygonView = [[MKPolygonRenderer alloc] initWithPolygon:self.intersectedPolygon];
             NSLog(@"intersected polygon has %lu points", (unsigned long)self.intersectedPolygon.pointCount);
             [map addOverlay:self.intersectedPolygon];
         }
